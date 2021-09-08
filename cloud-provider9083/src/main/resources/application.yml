@@ -1,0 +1,48 @@
+server:
+  port: 9083
+spring:
+  application:
+    name: cloud-provider-9083
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        #server-addr: localhost:8848
+        server-addr: 192.168.85.26:8848
+        #namespace: 4081fa20-075e-40a9-a8d5-97388b6697d7
+        namespace: a131a422-f016-4ecc-9e7f-43e6f0fc8f19
+        metadata:
+          preserved.heart.beat.interval: 15000 #该实例在客户端上报心跳的间隔时间。（单位:毫秒）
+          preserved.heart.beat.timeout: 30000 #该实例在不发送心跳后，从健康到不健康的时间。（单位:毫秒）
+          preserved.ip.delete.timeout: 60000 #该实例在不发送心跳后，被nacos下掉该实例的时间。（单位:毫秒）
+#    sentinel:
+#      transport:
+#        dashboard: localhost:8080
+#        #默认8719端口，假如被占用自动从8719+1扫描，直至找到未被占用的端口
+#        port: 8719
+
+dubbo:
+  scan:
+    base-packages: com.example.cloudprovider
+  protocol:
+    name: dubbo
+    port: 20883
+  registry:
+    #address: nacos://localhost:8848
+    address: nacos://192.168.85.26:8848
+    username: nacos
+    password: nacos
+    #parameters[namespace]: 4081fa20-075e-40a9-a8d5-97388b6697d7
+    parameters[namespace]: a131a422-f016-4ecc-9e7f-43e6f0fc8f19
+  provider:
+    group: demo01
+    version: 1V
+
+
+
+logging:
+  level:
+    com:
+      alibaba:
+        nacos: warn
